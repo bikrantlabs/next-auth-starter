@@ -1,12 +1,13 @@
 import React from "react"
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 
 import { SocialButtons } from "./social-buttons"
 
 interface CardWrapperProps {
   Header: JSX.Element
   Content: JSX.Element
+  Footer?: JSX.Element
   showSocialButtons?: boolean
 }
 /**
@@ -18,13 +19,17 @@ interface CardWrapperProps {
 export const CardWrapper: React.FC<CardWrapperProps> = ({
   Header,
   showSocialButtons = false,
+  Footer,
   Content,
 }) => {
   return (
     <Card>
       <CardHeader>{Header}</CardHeader>
-      <CardContent>{Content}</CardContent>
-      {showSocialButtons && <SocialButtons />}
+      <CardContent>
+        {Content}
+        {showSocialButtons && <SocialButtons />}
+      </CardContent>
+      <CardFooter>{Footer}</CardFooter>
     </Card>
   )
 }

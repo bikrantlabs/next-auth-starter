@@ -1,7 +1,3 @@
-import React from "react"
-
-import { Card, CardHeader } from "@/components/ui/card"
-
 import { CardWrapper } from "./card-wrapper"
 
 /**
@@ -12,10 +8,11 @@ export const LoginCard = () => {
   return (
     <CardWrapper
       Header={
-        <div className="text-4xl font-semibold text-center">Card Header</div>
+        <div className="text-4xl font-semibold text-center">Welcome Back!</div>
       }
-      Content={<div>Content!</div>}
+      Content={<div>Render Login Form Here</div>}
       showSocialButtons
+      Footer={<div className="mx-auto">New user? Register</div>}
     />
   )
 }
