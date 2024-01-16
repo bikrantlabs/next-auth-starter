@@ -71,10 +71,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading && <IconLoader2 className="animate-spin mr-2" />}
         {StartIcon && StartIcon}
-        <span className={cn(StartIcon && "ml-2", EndIcon && "mr-2")}>
-          {children}
-        </span>
-
+        {children && (
+          <span className={cn(StartIcon && "ml-2", EndIcon && "mr-2")}>
+            {children}
+          </span>
+        )}
         {EndIcon && EndIcon}
       </Comp>
     )
