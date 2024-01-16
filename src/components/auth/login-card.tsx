@@ -1,3 +1,4 @@
+import { LoginForm } from "../forms/login-form"
 import { CardWrapper } from "./card-wrapper"
 
 /**
@@ -10,7 +11,7 @@ export const LoginCard = () => {
       Header={
         <div className="text-4xl font-semibold text-center">Welcome Back!</div>
       }
-      Content={<div>Render Login Form Here</div>}
+      Content={<LoginForm />}
       showSocialButtons
       Footer={<div className="mx-auto">New user? Register</div>}
     />
