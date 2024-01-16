@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import { Callout } from "../ui/callout"
+
 const loginFormSchema = z.object({
   email: z.string().email({
     message: "Email is required",
@@ -30,6 +32,8 @@ const loginFormSchema = z.object({
     }),
 })
 export const LoginForm = () => {
+  const [errorMessage, setErrorMessage] = useState("Invalid")
+
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -74,6 +78,9 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
+          {errorMessage && (
+            <Callout variant="warning" content={<p>Incorrect password</p>} />
+          )}
           <Button className="mx-auto w-full" type="submit">
             Submit
           </Button>
