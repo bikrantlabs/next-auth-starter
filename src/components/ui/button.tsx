@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
+import { IconLoader2 } from "@tabler/icons-react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
@@ -14,7 +15,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
@@ -22,7 +23,7 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
+        sm: "h-8 rounded-md px-2",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
       },
@@ -38,17 +39,44 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  isLoading?: boolean
+  startIcon?: JSX.Element
+  endIcon?: JSX.Element
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      isLoading = false,
+      children,
+      variant,
+      size,
+      asChild = false,
+      startIcon,
+      endIcon,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : "button"
+    const StartIcon = startIcon
+    const EndIcon = endIcon
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+        disabled={isLoading}
+      >
+        {isLoading && <IconLoader2 className="animate-spin mr-2" />}
+        {StartIcon && StartIcon}
+        <span className={cn(StartIcon && "ml-2", EndIcon && "mr-2")}>
+          {children}
+        </span>
+
+        {EndIcon && EndIcon}
+      </Comp>
     )
   }
 )

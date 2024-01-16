@@ -80,3 +80,8 @@ body,
     @apply bg-background text-foreground;
   }
 }
+@layer components {
+  .icon-sm {
+    @apply h-5 w-5 stroke-[1.3px];
+  }
+}
