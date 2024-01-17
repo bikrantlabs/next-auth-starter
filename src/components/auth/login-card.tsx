@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import { LoginForm } from "../forms/login-form"
 import { CardWrapper } from "./card-wrapper"
 
@@ -13,7 +15,11 @@ export const LoginCard = () => {
       }
       Content={<LoginForm />}
       showSocialButtons
-      Footer={<div className="mx-auto">New user? Register</div>}
+      Footer={
+        <div className="mx-auto text-sm">
+          <Link href="/auth/register">New user? Register</Link>{" "}
+        </div>
+      }
     />
   )
 }
