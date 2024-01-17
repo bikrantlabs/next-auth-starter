@@ -35,7 +35,10 @@ body,
     --destructive-foreground: 210 40% 98%;
 
     --warning: 45.4 93% 48%;
-    --warning-foreground: 45.398, 93%, 48%;
+    --warning-foreground: 45.4 93% 48%;
+
+    --success: 160 84% 39%;
+    --success-foreground: 160 84% 39%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -70,7 +73,10 @@ body,
     --destructive-foreground: 210 40% 98%;
 
     --warning: 28.4 73% 26%;
-    --warning-foreground: 45.398, 93%, 48%;
+    --warning-foreground: 210 40% 98%;
+
+    --success: 160 84% 39%;
+    --success-foreground: 160 84% 39%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;

@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
+import { login, LoginActionReturnType } from "@/actions/login"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -18,7 +19,7 @@ import { Input } from "@/components/ui/input"
 
 import { Callout } from "../ui/callout"
 
-const loginFormSchema = z.object({
+export const loginSchema = z.object({
   email: z.string().email({
     message: "Email is required",
   }),
@@ -32,17 +33,21 @@ const loginFormSchema = z.object({
     }),
 })
 export const LoginForm = () => {
-  const [errorMessage, setErrorMessage] = useState("Invalid")
+  const [isPending, startTransition] = useTransition()
+  const [actionResponse, setActionResponse] = useState<LoginActionReturnType>()
 
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   })
-  const onSubmit = (values: z.infer<typeof loginFormSchema>) => {
-    console.log(values)
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    setActionResponse(undefined)
+    startTransition(() => {
+      login(values).then((data) => setActionResponse(data))
+    })
   }
   return (
     <Form {...form}>
@@ -56,8 +61,10 @@ export const LoginForm = () => {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isPending}
                     placeholder="email@example.com"
                     type="email"
+                    autoComplete="off"
                     {...field}
                   />
                 </FormControl>
@@ -68,6 +75,7 @@ export const LoginForm = () => {
           <FormField
             control={form.control}
             name="password"
+            disabled={isPending}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
@@ -78,11 +86,18 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
-          {errorMessage && (
-            <Callout variant="warning" content={<p>Incorrect password</p>} />
+          {actionResponse && (
+            <Callout
+              content={<p>{actionResponse.message}</p>}
+              variant={actionResponse.type}
+            />
           )}
-          <Button className="mx-auto w-full" type="submit">
-            Submit
+          <Button
+            isLoading={isPending}
+            className="mx-auto w-full"
+            type="submit"
+          >
+            Login
           </Button>
         </div>
       </form>

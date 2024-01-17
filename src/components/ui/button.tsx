@@ -54,6 +54,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size,
       asChild = false,
       startIcon,
+      disabled,
       endIcon,
       ...props
     },
@@ -67,9 +68,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-        disabled={isLoading}
+        disabled={isLoading || disabled}
       >
-        {isLoading && <IconLoader2 className="animate-spin mr-2" />}
+        {isLoading && <IconLoader2 className="animate-spin mr-2 icon-sm" />}
         {StartIcon && StartIcon}
         {children && (
           <span className={cn(StartIcon && "ml-2", EndIcon && "mr-2")}>
