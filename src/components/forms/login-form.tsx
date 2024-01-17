@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { login, LoginActionReturnType } from "@/actions/login"
+import { loginSchema } from "@/schema/loginSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -19,19 +20,6 @@ import { Input } from "@/components/ui/input"
 
 import { Callout } from "../ui/callout"
 
-export const loginSchema = z.object({
-  email: z.string().email({
-    message: "Email is required",
-  }),
-  password: z
-    .string()
-    .min(8, {
-      message: "Minimum 8 characters required",
-    })
-    .max(30, {
-      message: "Maximum 30 characters allowed",
-    }),
-})
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition()
   const [actionResponse, setActionResponse] = useState<LoginActionReturnType>()

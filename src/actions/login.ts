@@ -1,8 +1,7 @@
 "use server"
 
+import { loginSchema } from "@/schema/loginSchema"
 import * as z from "zod"
-
-import { loginSchema } from "@/components/forms/login-form"
 
 export type LoginActionReturnType = {
   success: boolean
