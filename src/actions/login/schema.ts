@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-export const registerSchema = z.object({
+export const LoginSchema = z.object({
   email: z.string().email({
     message: "Email is required",
   }),
@@ -11,13 +11,5 @@ export const registerSchema = z.object({
     })
     .max(30, {
       message: "Maximum 30 characters allowed",
-    }),
-  username: z
-    .string()
-    .min(3, {
-      message: "Minimum 3 characters allowed",
-    })
-    .max(15, {
-      message: "Maximum 15 characters allowed",
     }),
 })

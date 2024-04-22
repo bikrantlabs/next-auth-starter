@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useTransition } from "react"
-import { login, LoginActionReturnType } from "@/actions/login"
-import { loginSchema } from "@/schema/loginSchema"
+import { loginAction } from "@/actions/login"
+import { LoginSchema } from "@/actions/login/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { useAction } from "@/hooks/use-action"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -21,21 +21,16 @@ import { Input } from "@/components/ui/input"
 import { Callout } from "../ui/callout"
 
 export const LoginForm = () => {
-  const [isPending, startTransition] = useTransition()
-  const [actionResponse, setActionResponse] = useState<LoginActionReturnType>()
-
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const { data, fieldErrors, isLoading, execute } = useAction(loginAction)
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   })
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    setActionResponse(undefined)
-    startTransition(() => {
-      login(values).then((data) => setActionResponse(data))
-    })
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    execute(values)
   }
   return (
     <Form {...form}>
@@ -49,7 +44,7 @@ export const LoginForm = () => {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    disabled={isPending}
+                    disabled={isLoading}
                     placeholder="email@example.com"
                     type="email"
                     autoComplete="off"
@@ -63,7 +58,7 @@ export const LoginForm = () => {
           <FormField
             control={form.control}
             name="password"
-            disabled={isPending}
+            disabled={isLoading}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
@@ -74,14 +69,11 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
-          {actionResponse && (
-            <Callout
-              content={<p>{actionResponse.message}</p>}
-              variant={actionResponse.type}
-            />
+          {data && (
+            <Callout content={<p>{data.message}</p>} variant={data.type} />
           )}
           <Button
-            isLoading={isPending}
+            isLoading={isLoading}
             className="mx-auto w-full"
             type="submit"
           >

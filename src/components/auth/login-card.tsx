@@ -1,3 +1,4 @@
+/* Login Form is used inside login card */
 import Link from "next/link"
 
 import { LoginForm } from "../forms/login-form"
