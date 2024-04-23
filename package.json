@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ui:add": "pnpm dlx shadcn-ui@latest add"
+    "ui:add": "pnpm dlx shadcn-ui@latest add",
+    "release": "release-it --no-npm",
+    "commit": "git add . && commit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -46,6 +48,41 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "prisma": "^5.8.1",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@release-it/conventional-changelog": "^8.0.1",
+    "husky": "^9.0.11",
+    "release-it": "^17.2.0",
+    "@commitlint/prompt-cli": "^19.3.0"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "release": false
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "infile": "CHANGELOG.md",
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            }
+          ]
+        }
+      }
+    }
   }
 }
