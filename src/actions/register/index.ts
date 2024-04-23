@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
+import bcrypt from "bcrypt"
 
 import { createSafeAction } from "@/lib/create-safe-action"
 import { db } from "@/lib/db"
@@ -9,9 +9,37 @@ import { RegisterSchema } from "./schema"
 import { InputType, ReturnType } from "./types"
 
 async function handler(data: InputType): Promise<ReturnType> {
+  const { email, password, username } = data
+
+  const existingUser = await db.user.findUnique({
+    where: {
+      email,
+    },
+  })
+
+  if (existingUser) {
+    return {
+      data: {
+        message: "Email already taken",
+        type: "error",
+      },
+      success: false,
+    }
+  }
+  const hashedPassword = await bcrypt.hash(password, 10)
+  await db.user.create({
+    data: {
+      name: username,
+      email,
+      password: hashedPassword,
+    },
+  })
+
+  // TODO: Send verification email
+
   return {
     data: {
-      message: "Successfully registered",
+      message: "Registered Successfully",
       type: "success",
     },
   }
