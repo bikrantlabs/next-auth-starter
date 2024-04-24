@@ -10,9 +10,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ui:add": "pnpm dlx shadcn-ui@latest add",
+    "ui:add": "yarn shadcn-ui@latest add",
+    "db:push": "yarn prisma db push",
+    "db:reset": "yarn prisma migrate reset",
     "release": "release-it --no-npm",
-    "commit": "git add . && commit"
+    "commit-all": "git add . && commit",
+    "commit": "commit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
