@@ -6,7 +6,7 @@ import { db } from "./db"
 
 /**
  * Prisma doesn't work on edge, and neither does the session strategy
- * hence we have to use jwt strategy does the session strategy
+ * hence we have to use jwt strategy
  */
 
 // Object destructuring and immediately exporting
