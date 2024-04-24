@@ -1,6 +1,6 @@
 "use server"
 
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 import { createSafeAction } from "@/lib/create-safe-action"
 import { db } from "@/lib/db"
@@ -16,7 +16,7 @@ async function handler(data: InputType): Promise<ReturnType> {
       email,
     },
   })
-
+  console.log(`🔥 index.ts:19 ~ Fired Register Action... ~`)
   if (existingUser) {
     return {
       data: {

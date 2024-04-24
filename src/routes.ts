@@ -7,7 +7,7 @@ export const publicRoutes = ["/"]
  *
  * This routes will redirect user to `DEFAULT_LOGIN_REDIRECT`
  */
-export const authRotues = ["/auth/login"]
+export const authRotues = ["/auth/login", "/auth/register"]
 
 /**
  * Routes that start with this prefix are used for api authentication
