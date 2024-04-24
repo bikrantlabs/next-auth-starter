@@ -10,7 +10,7 @@ import { InputType, ReturnType } from "./types"
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { email, password, username } = data
-
+  console.log(`🔥 index.ts:13 ~ Data: ~`, email, password, username)
   const existingUser = await db.user.findUnique({
     where: {
       email,
