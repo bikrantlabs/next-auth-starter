@@ -1,6 +1,6 @@
 "use client"
 
-import { useParams, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { loginAction } from "@/actions/login"
 import { LoginSchema } from "@/actions/login/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -24,7 +24,7 @@ import { Callout } from "../ui/callout"
 export const LoginForm = () => {
   const params = useSearchParams()
 
-  const { data, fieldErrors, isLoading, execute } = useAction(loginAction)
+  const { data, isLoading, execute } = useAction(loginAction)
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
