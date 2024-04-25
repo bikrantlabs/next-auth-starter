@@ -70,12 +70,12 @@ export const VerificationEmail = ({
   </Html>
 )
 
-const main = {
+export const main = {
   fontFamily:
     '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
 }
 
-const container = {
+export const container = {
   backgroundColor: "#09090b",
   color: "#fff",
   margin: "0 auto",
@@ -83,11 +83,11 @@ const container = {
   borderRadius: "8px",
 }
 
-const logo = {
+export const logo = {
   margin: "0 auto",
 }
 
-const paragraph = {
+export const paragraph = {
   fontSize: "16px",
   lineHeight: "26px",
 }
@@ -96,7 +96,7 @@ const btnContainer = {
   textAlign: "center" as const,
 }
 
-const button = {
+export const button = {
   backgroundColor: "#fff",
   borderRadius: "3px",
   color: "#000",
