@@ -9,8 +9,14 @@ import { getUserByEmail } from "./server/get-user"
 
 const authConfig = {
   providers: [
-    Github,
-    Google,
+    Github({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
     Credentials({
       async authorize(credentials) {
         const validatedField = LoginSchema.safeParse(credentials)
