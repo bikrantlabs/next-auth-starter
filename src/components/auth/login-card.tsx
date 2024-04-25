@@ -10,17 +10,21 @@ import { CardWrapper } from "./card-wrapper"
  */
 export const LoginCard = () => {
   return (
-    <CardWrapper
-      Header={
-        <div className="text-4xl font-semibold text-center">Welcome Back!</div>
-      }
-      Content={<LoginForm />}
-      showSocialButtons
-      Footer={
-        <div className="mx-auto text-sm">
-          <Link href="/auth/register">New user? Register</Link>{" "}
-        </div>
-      }
-    />
+    <div className="max-w-[22rem] w-full">
+      <CardWrapper
+        Header={
+          <div className="text-4xl font-semibold text-center">
+            Welcome Back!
+          </div>
+        }
+        Content={<LoginForm />}
+        showSocialButtons
+        Footer={
+          <div className="mx-auto text-sm">
+            <Link href="/auth/register">New user? Register</Link>{" "}
+          </div>
+        }
+      />
+    </div>
   )
 }

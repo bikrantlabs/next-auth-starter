@@ -1,5 +1,6 @@
 "use client"
 
+import { useParams, useSearchParams } from "next/navigation"
 import { loginAction } from "@/actions/login"
 import { LoginSchema } from "@/actions/login/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -21,6 +22,8 @@ import { Input } from "@/components/ui/input"
 import { Callout } from "../ui/callout"
 
 export const LoginForm = () => {
+  const params = useSearchParams()
+
   const { data, fieldErrors, isLoading, execute } = useAction(loginAction)
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -71,6 +74,12 @@ export const LoginForm = () => {
           />
           {data && (
             <Callout content={<p>{data.message}</p>} variant={data.type} />
+          )}
+          {params.get("error") === "OAuthAccountNotLinked" && !data && (
+            <Callout
+              content={<p>You are aleady registered from another provider</p>}
+              variant={"error"}
+            />
           )}
           <Button
             isLoading={isLoading}
