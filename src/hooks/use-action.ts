@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react"
 
+import { ErrorTypes } from "@/types/error-types"
 import { ActionState, FieldErrors } from "@/lib/create-safe-action"
 
 export type Action<TInput, TOutput> = (
@@ -8,7 +9,7 @@ export type Action<TInput, TOutput> = (
 
 interface UseActionOptions<TOutput> {
   onSuccess?: (data: TOutput) => void
-  onError?: (error: string) => void
+  onError?: (error: ErrorTypes) => void
   onComplete?: () => void
 }
 
@@ -19,8 +20,9 @@ export const useAction = <TInput, TOutput>(
   const [fieldErrors, setFieldErrors] = useState<
     FieldErrors<TInput> | undefined
   >(undefined)
-  const [error, setErrors] = useState<string | undefined>(undefined)
+  const [error, setErrors] = useState<ErrorTypes | undefined>(undefined)
   const [data, setData] = useState<TOutput | undefined>(undefined)
+  const [success, setSuccess] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [statusCode, setStatusCode] = useState<number | undefined>(undefined)
 
@@ -34,13 +36,15 @@ export const useAction = <TInput, TOutput>(
         if (!result) {
           return
         }
-        const { data, error, fieldErrors, statusCode } = result
+        const { data, error, fieldErrors, statusCode, success } = result
 
         if (fieldErrors) setFieldErrors(fieldErrors)
+        setSuccess(success)
         if (error) {
           setErrors(error)
           // Callback to onError function
           options.onError?.(error)
+          setIsLoading(false)
         }
         if (data) {
           setData(data)
@@ -48,11 +52,13 @@ export const useAction = <TInput, TOutput>(
           setFieldErrors(undefined)
           setErrors(undefined)
           options.onSuccess?.(data)
+          setIsLoading(false)
         }
         if (statusCode) setStatusCode(statusCode)
       } catch (e) {
         //
-        options.onError?.(error || "Something went wrong")
+        options.onError?.(error || ErrorTypes.InternalError)
+        setIsLoading(false)
         console.log(e)
       } finally {
         setIsLoading(false)
@@ -70,5 +76,6 @@ export const useAction = <TInput, TOutput>(
     fieldErrors,
     setFieldErrors,
     execute,
+    success,
   }
 }

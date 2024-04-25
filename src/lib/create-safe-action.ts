@@ -9,7 +9,7 @@ export type FieldErrors<T> = {
 export type ActionState<TInput, TOutput> = {
   fieldErrors?: FieldErrors<TInput>
   error?: ErrorTypes
-  success?: boolean
+  success: boolean
   data?: TOutput
   statusCode?: number
 }
@@ -24,6 +24,7 @@ export const createSafeAction = <TInput, TOutput>(
       return {
         fieldErrors: validationResult.error.flatten()
           .fieldErrors as FieldErrors<TInput>,
+        success: false,
       }
     }
 

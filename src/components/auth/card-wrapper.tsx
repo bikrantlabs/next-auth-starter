@@ -24,7 +24,12 @@ export const CardWrapper: React.FC<CardWrapperProps> = ({
 }) => {
   return (
     <Card>
-      <CardHeader>{Header}</CardHeader>
+      <CardHeader>
+        <h1 className="text-4xl font-semibold text-center">
+          🔏 Authentication
+        </h1>
+        <h2 className="text-center text-secondary text-lg">{Header}</h2>
+      </CardHeader>
       <CardContent>
         {Content}
         {showSocialButtons && <SocialButtons />}

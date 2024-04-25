@@ -32,7 +32,7 @@ export const Callout: React.FC<CalloutProps> = ({
   return (
     <div
       className={cn(
-        "p-3 rounded-md text-sm flex items-start gap-x-2",
+        "p-3 rounded-md text-sm w-full flex items-start gap-x-2",
         variant === "warning" && "bg-warning/15 text-warning",
         // TODO: Add success styles
         variant === "success" && "bg-success/15 text-success",

@@ -12,11 +12,7 @@ export const LoginCard = () => {
   return (
     <div className="max-w-[22rem] w-full">
       <CardWrapper
-        Header={
-          <div className="text-4xl font-semibold text-center">
-            Welcome Back!
-          </div>
-        }
+        Header={<p>Welcome Back</p>}
         Content={<LoginForm />}
         showSocialButtons
         Footer={

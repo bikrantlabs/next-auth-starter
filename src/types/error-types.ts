@@ -5,4 +5,7 @@ export enum ErrorTypes {
   OAuthLinkError,
   VerificationEmailSendError,
   EmailAlreadyExists,
+  InvalidToken,
+  TokenExpired,
+  InternalError,
 }

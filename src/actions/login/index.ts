@@ -110,6 +110,7 @@ async function handler(data: InputType): Promise<ReturnType> {
     throw error
   }
   return {
+    success: true,
     data: {
       message: "Successfully logged in",
       type: "success",

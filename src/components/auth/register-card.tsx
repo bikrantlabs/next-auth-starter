@@ -11,11 +11,7 @@ export const RegisterCard = () => {
   return (
     <div className="max-w-[22rem] w-full">
       <CardWrapper
-        Header={
-          <div className="text-4xl font-semibold text-center">
-            Welcome human
-          </div>
-        }
+        Header={<p>Welcome</p>}
         Content={<RegisterForm />}
         showSocialButtons
         Footer={
