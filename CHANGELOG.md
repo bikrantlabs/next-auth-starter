@@ -1,5 +1,18 @@
 
 
+## [0.2.0](https://github.com/bikrantlabs/next-auth-starter/compare/0.1.0...0.2.0) (2024-04-24)
+
+
+### Features
+
+* **auth:** implement logout functionality ([a46a97f](https://github.com/bikrantlabs/next-auth-starter/commit/a46a97f38e24171af66f4b7736be9d8c3ac1b334))
+* **callbacks:** add session and jwt callbacks ([e9afec5](https://github.com/bikrantlabs/next-auth-starter/commit/e9afec5fa763197504d493b9effeffa8f15ff9f4))
+
+
+### Bug Fixes
+
+* **session:** fix session typescript warning on user role ([10daacd](https://github.com/bikrantlabs/next-auth-starter/commit/10daacd4a68722ffb51262f790385a8f617f2fed))
+
 ## [0.1.0](https://github.com/bikrantlabs/next-auth-starter/compare/0.0.1...0.1.0) (2024-04-24)
 
 

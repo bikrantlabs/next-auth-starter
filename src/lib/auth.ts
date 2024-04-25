@@ -1,11 +1,28 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { UserRole } from "@prisma/client"
-import NextAuth from "next-auth"
+import NextAuth, { DefaultSession } from "next-auth"
 
 import authConfig from "./auth.config"
 import { db } from "./db"
 import { getUserById } from "./server/get-user"
 
+declare module "next-auth" {
+  /**
+   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
+    user: {
+      /** The user's postal address. */
+      role: UserRole
+      /**
+       * By default, TypeScript merges new interface properties and overwrites existing ones.
+       * In this case, the default session user properties will be overwritten,
+       * with the new ones defined above. To keep the default session user properties,
+       * you need to add them back into the newly declared interface.
+       */
+    } & DefaultSession["user"]
+  }
+}
 // Object destructuring and immediately exporting
 export const {
   handlers: { GET, POST },
@@ -27,7 +44,8 @@ export const {
     async session({ token, session }) {
       if (session.user) {
         if (token.sub) session.user.id = token.sub
-        if (token.role) session.user.role = token.role as UserRole
+        const role = token.role as UserRole
+        if (token.role) session.user.role = role
       }
 
       return session

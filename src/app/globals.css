@@ -48,10 +48,10 @@ body,
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 240 10% 4%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 240 10% 4%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
@@ -60,7 +60,7 @@ body,
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 270 1% 52%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -78,7 +78,9 @@ body,
     --success: 160 84% 39%;
     --success-foreground: 160 84% 39%;
 
-    --border: 217.2 32.6% 17.5%;
+    --secondary-text: 270 1% 52%;
+
+    --border: 270 1% 52%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
