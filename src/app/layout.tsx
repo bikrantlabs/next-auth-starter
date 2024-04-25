@@ -3,7 +3,6 @@ import { Inter } from "next/font/google"
 
 import "./globals.css"
 
-import { ThemeChanger } from "@/components/features/theme-changer"
 import { Navbar } from "@/components/navbar"
 import { ThemeProvider } from "@/components/theme-provider"
 

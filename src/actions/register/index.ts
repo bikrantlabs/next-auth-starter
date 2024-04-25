@@ -1,24 +1,28 @@
 "use server"
 
+import { sendVerificationEmail } from "@/emails/mail"
 import bcrypt from "bcryptjs"
 
+import { ErrorTypes } from "@/types/error-types"
 import { createSafeAction } from "@/lib/create-safe-action"
 import { db } from "@/lib/db"
+import { generateVerificationToken } from "@/lib/server/tokens"
 
 import { RegisterSchema } from "./schema"
 import { InputType, ReturnType } from "./types"
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { email, password, username } = data
-  console.log(`🔥 index.ts:13 ~ Data: ~`, email, password, username)
+
   const existingUser = await db.user.findUnique({
     where: {
       email,
     },
   })
-  console.log(`🔥 index.ts:19 ~ Fired Register Action... ~`)
+
   if (existingUser) {
     return {
+      error: ErrorTypes.EmailAlreadyExists,
       data: {
         message: "Email already taken",
         type: "error",
@@ -35,13 +39,29 @@ async function handler(data: InputType): Promise<ReturnType> {
     },
   })
 
-  // TODO: Send verification email
-
-  return {
-    data: {
-      message: "Registered Successfully",
-      type: "success",
-    },
+  const verificationToken = await generateVerificationToken(email)
+  try {
+    await sendVerificationEmail(
+      username,
+      verificationToken.email,
+      verificationToken.token
+    )
+    return {
+      data: {
+        message: "Verification email sent!",
+        type: "success",
+      },
+      success: true,
+    }
+  } catch (error) {
+    return {
+      error: ErrorTypes.VerificationEmailSendError,
+      data: {
+        message: "Error sending verification token.",
+        type: "error",
+      },
+      success: false,
+    }
   }
 }
 
