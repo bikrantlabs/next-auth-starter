@@ -32,6 +32,23 @@ export const {
 } = NextAuth({
   callbacks: {
     /**
+     * The return value of `signIn` callback determines whether the user is allowed to sign-in or not
+     *
+     * This callback fires whenever the `signIn` function is called.
+     */
+    async signIn({ user, account }) {
+      // Allow OAuth without email verification
+      if (account?.provider !== "credentials") return true
+      if (user.id) {
+        const existingUser = await getUserById(user.id)
+
+        // Prevent sign-in without email verification
+        if (!existingUser?.emailVerified) return false
+        // TODO: Add 2FA Check
+      }
+      return true
+    },
+    /**
      * We can also extend `session` like we've extended jwt token.
      *
      * @example

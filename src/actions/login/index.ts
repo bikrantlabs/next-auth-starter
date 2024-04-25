@@ -1,17 +1,84 @@
 "use server"
 
+import { sendVerificationEmail } from "@/emails/mail"
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { AuthError } from "next-auth"
 
+import { ErrorTypes } from "@/types/error-types"
 import { signIn } from "@/lib/auth"
 import { createSafeAction } from "@/lib/create-safe-action"
+import { getUserByEmail } from "@/lib/server/get-user"
+import { generateVerificationToken } from "@/lib/server/tokens"
+import { getVerificationTokenByEmail } from "@/lib/server/verification-token"
 
 import { LoginSchema } from "./schema"
 import { InputType, ReturnType } from "./types"
 
 async function handler(data: InputType): Promise<ReturnType> {
   const { email, password } = data
-  console.log(`🔥 index.ts:14 ~ Fired login server action ~`)
+
+  const existingUser = await getUserByEmail(email)
+
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    return {
+      success: false,
+      error: ErrorTypes.CredentialsIncorrect,
+      data: {
+        message: "Invalid Credentials",
+        type: "error",
+      },
+    }
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await getVerificationTokenByEmail(email)
+
+    if (verificationToken) {
+      const tokenExpired = verificationToken.expires <= new Date()
+      if (tokenExpired) {
+        const newVerificationToken = await generateVerificationToken(email)
+        await sendVerificationEmail(
+          existingUser.name || email.split("@")[0],
+          newVerificationToken.email,
+          newVerificationToken.token
+        )
+        return {
+          success: false,
+          error: ErrorTypes.EmailNotVerified,
+          data: {
+            message: "Confirmation email sent. Please check your inbox!",
+            type: "success",
+          },
+        }
+      } else {
+        return {
+          success: false,
+          error: ErrorTypes.EmailNotVerified,
+          data: {
+            message: "Please check our inbox and verify your email!",
+            type: "warning",
+          },
+        }
+      }
+    } else {
+      const newVerificationToken = await generateVerificationToken(email)
+      await sendVerificationEmail(
+        existingUser.name || email.split("@")[0],
+        newVerificationToken.email,
+        newVerificationToken.token
+      )
+
+      return {
+        success: false,
+        error: ErrorTypes.EmailNotVerified,
+        data: {
+          message: "Confirmation email sent. Please check your inbox!",
+          type: "success",
+        },
+      }
+    }
+  }
+
   try {
     await signIn("credentials", {
       email,

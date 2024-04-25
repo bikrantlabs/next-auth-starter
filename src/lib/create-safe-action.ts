@@ -1,12 +1,14 @@
 import { z } from "zod"
 
+import { ErrorTypes } from "@/types/error-types"
+
 export type FieldErrors<T> = {
   [K in keyof T]?: string[]
 }
 
 export type ActionState<TInput, TOutput> = {
   fieldErrors?: FieldErrors<TInput>
-  error?: string | null
+  error?: ErrorTypes
   success?: boolean
   data?: TOutput
   statusCode?: number
