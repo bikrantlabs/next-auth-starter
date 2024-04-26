@@ -46,7 +46,8 @@ async function handler(data: InputType): Promise<ReturnType> {
           success: false,
           error: ErrorTypes.EmailNotVerified,
           data: {
-            message: "Confirmation email sent. Please check your inbox!",
+            message:
+              "Confirmation email sent. Please check your inbox!  Expires in 1 hour",
             type: "success",
           },
         }
@@ -72,7 +73,8 @@ async function handler(data: InputType): Promise<ReturnType> {
         success: false,
         error: ErrorTypes.EmailNotVerified,
         data: {
-          message: "Confirmation email sent. Please check your inbox!",
+          message:
+            "Confirmation email sent. Please check your inbox!  Expires in 1 hour",
           type: "success",
         },
       }

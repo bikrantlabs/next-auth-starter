@@ -1,9 +1,7 @@
 "use client"
 
-import Link from "next/link"
-import { useSearchParams } from "next/navigation"
-import { loginAction } from "@/actions/login"
-import { LoginSchema } from "@/actions/login/schema"
+import { PasswordResetSchema } from "@/actions/reset-password/schema"
+import { sendPasswordResetLinkAction } from "@/actions/reset-password/send-reset-link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -22,18 +20,15 @@ import { Input } from "@/components/ui/input"
 
 import { Callout } from "../ui/callout"
 
-export const LoginForm = () => {
-  const params = useSearchParams()
-
-  const { data, isLoading, execute } = useAction(loginAction)
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+export const PasswordResetForm = () => {
+  const { data, isLoading, execute } = useAction(sendPasswordResetLinkAction)
+  const form = useForm<z.infer<typeof PasswordResetSchema>>({
+    resolver: zodResolver(PasswordResetSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   })
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof PasswordResetSchema>) => {
     execute(values)
   }
   return (
@@ -59,40 +54,17 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="password"
-            disabled={isLoading}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="********" type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Link href="/auth/password-reset">
-            <Button className="p-0 font-normal" size="sm" variant="link">
-              Forget Password?
-            </Button>
-          </Link>
+
           {data && (
             <Callout content={<p>{data.message}</p>} variant={data.type} />
           )}
-          {params.get("error") === "OAuthAccountNotLinked" && !data && (
-            <Callout
-              content={<p>You are aleady registered from another provider</p>}
-              variant={"error"}
-            />
-          )}
+
           <Button
             isLoading={isLoading}
             className="mx-auto w-full"
             type="submit"
           >
-            Login
+            Send reset link
           </Button>
         </div>
       </form>

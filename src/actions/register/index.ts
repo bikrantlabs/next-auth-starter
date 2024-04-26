@@ -48,7 +48,7 @@ async function handler(data: InputType): Promise<ReturnType> {
     )
     return {
       data: {
-        message: "Verification email sent!",
+        message: "Verification email sent! Expires in 1 hour",
         type: "success",
       },
       success: true,
