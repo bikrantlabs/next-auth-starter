@@ -12,4 +12,5 @@ export const LoginSchema = z.object({
     .max(30, {
       message: "Maximum 30 characters allowed",
     }),
+  code: z.string().optional(),
 })
