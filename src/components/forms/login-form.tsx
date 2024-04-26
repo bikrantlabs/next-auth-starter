@@ -35,6 +35,7 @@ interface LoginFormProps {
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const params = useSearchParams()
   const [code, setCode] = useState("")
+  const [hasCode, setHasCode] = useState(false)
   const { data, isLoading, execute } = useAction(loginAction)
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -45,47 +46,63 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
     },
   })
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    execute(values)
+    console.log(`🔥 login-form.tsx:48 ~ Executing ~`)
+    execute({
+      email: values.email,
+      password: values.password,
+      code,
+    })
   }
   useEffect(() => {
-    data?.twoFactor && onSuccess()
-  }, [data?.twoFactor, onSuccess])
+    if (hasCode) return
+    if (data?.twoFactor) {
+      onSuccess()
+      setHasCode(data.twoFactor)
+    }
+  }, [data?.twoFactor, onSuccess, hasCode])
+  console.log(`🔥 login-form.tsx:59 ~ Code ~`, code)
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        {data?.twoFactor ? (
-          <>
-            <div className="space-y-4 w-full mb-4 mx-auto flex flex-col items-center justify-center">
-              <div>
-                <InputOTP
-                  className="items-center justify-center hidden"
-                  maxLength={6}
-                  value={code}
-                  onChange={(_code) => setCode(_code)}
-                >
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} />
-                    <InputOTPSlot index={1} />
-                    <InputOTPSlot index={2} />
-                  </InputOTPGroup>
-                  <InputOTPSeparator />
-                  <InputOTPGroup>
-                    <InputOTPSlot index={3} />
-                    <InputOTPSlot index={4} />
-                    <InputOTPSlot index={5} />
-                  </InputOTPGroup>
-                </InputOTP>
-              </div>
-              <Button
-                isLoading={isLoading}
-                className="mx-auto w-full"
-                type="submit"
-              >
-                Confirm
-              </Button>
-            </div>
-          </>
-        ) : (
+      {hasCode ? (
+        <div className=" w-full mb-4 mx-auto ">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col items-center justify-center space-y-4"
+          >
+            <InputOTP
+              className="items-center justify-center hidden"
+              maxLength={6}
+              value={code}
+              onChange={(_code) => setCode(_code)}
+            >
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+              </InputOTPGroup>
+              <InputOTPSeparator />
+              <InputOTPGroup>
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+
+            {data && (
+              <Callout content={<p>{data.message}</p>} variant={data.type} />
+            )}
+            <Button
+              onClick={() => console.log("Submitting")}
+              isLoading={isLoading}
+              className="mx-auto w-full"
+              type="submit"
+            >
+              Confirm
+            </Button>
+          </form>
+        </div>
+      ) : (
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4 w-full mb-4">
             <FormField
               control={form.control}
@@ -147,8 +164,8 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               Login
             </Button>
           </div>
-        )}
-      </form>
+        </form>
+      )}
     </Form>
   )
 }
