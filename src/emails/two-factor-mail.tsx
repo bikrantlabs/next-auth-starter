@@ -102,7 +102,13 @@ const imageSection = {
 
 const coverSection = { backgroundColor: "#fff" }
 
-const upperSection = { padding: "25px 35px" }
+const upperSection = {
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  textAlign: "center" as const,
+}
 
 const lowerSection = { padding: "25px 35px" }
 

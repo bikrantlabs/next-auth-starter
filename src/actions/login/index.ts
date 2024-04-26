@@ -1,6 +1,6 @@
 "use server"
 
-import { sendVerificationEmail } from "@/emails/mail"
+import { sendTwoFactorEmail, sendVerificationEmail } from "@/emails/mail"
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { AuthError } from "next-auth"
 
@@ -8,7 +8,10 @@ import { ErrorTypes } from "@/types/error-types"
 import { signIn } from "@/lib/auth"
 import { createSafeAction } from "@/lib/create-safe-action"
 import { getUserByEmail } from "@/lib/server/get-user"
-import { generateVerificationToken } from "@/lib/server/tokens"
+import {
+  generateTwoFactorToken,
+  generateVerificationToken,
+} from "@/lib/server/tokens"
 import { getVerificationTokenByEmail } from "@/lib/server/verification-token"
 
 import { LoginSchema } from "./schema"
@@ -78,6 +81,23 @@ async function handler(data: InputType): Promise<ReturnType> {
           type: "success",
         },
       }
+    }
+  }
+
+  if (existingUser.twoFactorEnabled && existingUser.email) {
+    const twoFactorToken = await generateTwoFactorToken(existingUser.email)
+    await sendTwoFactorEmail(
+      existingUser.name || twoFactorToken.email.split("@")[0],
+      twoFactorToken.email,
+      twoFactorToken.token
+    )
+    return {
+      success: true,
+      data: {
+        twoFactor: true,
+        message: "Two factor code sent!",
+        type: "success",
+      },
     }
   }
 
