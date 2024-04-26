@@ -1,6 +1,7 @@
 import { Resend } from "resend"
 
 import { ResetPasswordEmail } from "./reset-password"
+import { TwoFactorEmail } from "./two-factor-mail"
 import { VerificationEmail } from "./verification-email"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -30,12 +31,24 @@ export const sendResetPasswordEmail = async (
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
-    subject: "Confirm your email",
+    subject: "Reset your password",
     react: (
       <ResetPasswordEmail
         userFirstname={username}
         resetPasswordLink={resetPasswordLink}
       />
     ),
+  })
+}
+export const sendTwoFactorEmail = async (
+  username: string,
+  email: string,
+  code: string
+) => {
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Enable 2FA",
+    react: <TwoFactorEmail twoFactorCode={code} />,
   })
 }
