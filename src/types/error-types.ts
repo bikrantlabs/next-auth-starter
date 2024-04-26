@@ -9,4 +9,5 @@ export enum ErrorTypes {
   TokenExpired,
   InternalError,
   Invalid2FACode,
+  Unauthorized,
 }
