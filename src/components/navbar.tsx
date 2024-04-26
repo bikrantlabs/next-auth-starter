@@ -1,6 +1,9 @@
+import Link from "next/link"
+
 import { auth, signOut } from "@/lib/auth"
 
 import { LoginButton } from "./auth/login-button"
+import { LogoutButton } from "./auth/logout-button"
 import { Icons } from "./icons"
 import { Button } from "./ui/button"
 
@@ -17,19 +20,20 @@ export const Navbar = async () => {
             </h1>
           </div>
           {session?.user ? (
-            /**
-             * We cannot directly do `<button onClick={signOut()}>`, since signOut() function modifies cookies
-             *
-             * Cookies can only be modified in a Server Action or Route Handler
-             */
-            <form
-              action={async () => {
-                "use server"
-                await signOut()
-              }}
-            >
-              <Button type="submit">Logout</Button>
-            </form>
+            <div className="flex items-center gap-2">
+              <Link href="/auth/settings">
+                <Button
+                  variant="ghost"
+                  endIcon={
+                    <Icons.settings className="h-5 w-5 mt-1 stroke-[1.5]" />
+                  }
+                >
+                  Settings
+                </Button>
+              </Link>
+
+              <LogoutButton />
+            </div>
           ) : (
             <LoginButton>
               <Button>Sign in</Button>

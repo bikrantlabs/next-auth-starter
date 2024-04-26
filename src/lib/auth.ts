@@ -15,6 +15,7 @@ declare module "next-auth" {
     user: {
       /** The user's postal address. */
       role: UserRole
+      twoFactorEnabled: boolean
       /**
        * By default, TypeScript merges new interface properties and overwrites existing ones.
        * In this case, the default session user properties will be overwritten,
@@ -45,7 +46,7 @@ export const {
 
         // Prevent sign-in without email verification
         if (!existingUser?.emailVerified) return false
-        // TODO: Add 2FA Check
+
         if (existingUser.twoFactorEnabled) {
           const confirmation = await getTwoFactorConfirmationByUserId(
             existingUser.id
@@ -74,8 +75,8 @@ export const {
     async session({ token, session }) {
       if (session.user) {
         if (token.sub) session.user.id = token.sub
-        const role = token.role as UserRole
-        if (token.role) session.user.role = role
+        if (token.role) session.user.role = token.role as UserRole
+        session.user.twoFactorEnabled = token.twoFactorEnabled as boolean
       }
 
       return session
@@ -96,7 +97,7 @@ export const {
 
       if (!existingUser) return token
       token.role = existingUser.role
-
+      token.twoFactorEnabled = existingUser.twoFactorEnabled
       return token
     },
   },

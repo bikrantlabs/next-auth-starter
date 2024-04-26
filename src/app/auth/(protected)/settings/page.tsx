@@ -1,16 +1,17 @@
-import { auth } from "@/lib/auth"
+"use client"
 
-const AuthSettingPage = async () => {
-  const session = await auth()
+import { auth } from "@/lib/auth"
+import { useCurrentUser } from "@/hooks/use-current-user"
+import { AuthLayout } from "@/components/auth/layout"
+
+import { ProtectedRouteNavbar } from "../_components/protected-navbar"
+
+const AuthSettingPage = () => {
+  const currentUser = useCurrentUser()
   return (
-    <div className="p-16">
-      AuthSettingPage
-      <div>
-        <pre>
-          <code>{JSON.stringify(session, null, 2)}</code>
-        </pre>
-      </div>
-    </div>
+    <AuthLayout>
+      <div>Hello</div>
+    </AuthLayout>
   )
 }
 
