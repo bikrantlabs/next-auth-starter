@@ -60,7 +60,6 @@ async function handler(data: InputType): Promise<ReturnType> {
   })
   return {
     success: true,
-    error: ErrorTypes.CredentialsIncorrect,
     data: {
       type: "success",
       message: "Email verified successfully",
