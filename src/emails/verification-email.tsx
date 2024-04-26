@@ -36,9 +36,7 @@ export const VerificationEmail = ({
       />
     </Head>
 
-    <Preview>
-      The sales intelligence platform that helps you uncover qualified leads.
-    </Preview>
+    <Preview>Verify your email!</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
