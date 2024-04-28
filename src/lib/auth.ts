@@ -4,6 +4,7 @@ import NextAuth, { DefaultSession } from "next-auth"
 
 import authConfig from "./auth.config"
 import { db } from "./db"
+import { getAccountByUserId } from "./server/account"
 import { getUserById } from "./server/get-user"
 import { getTwoFactorConfirmationByUserId } from "./server/two-factor-confirmation"
 
@@ -16,6 +17,7 @@ declare module "next-auth" {
       /** The user's postal address. */
       role: UserRole
       twoFactorEnabled: boolean
+      isOAuth: boolean
       /**
        * By default, TypeScript merges new interface properties and overwrites existing ones.
        * In this case, the default session user properties will be overwritten,
@@ -73,10 +75,14 @@ export const {
      * Then wherever we use `const session = auth()`, we will get the extended session.
      */
     async session({ token, session }) {
+      console.log(`🔥 auth.ts:76 ~ Data ~`, { token, session })
       if (session.user) {
         if (token.sub) session.user.id = token.sub
         if (token.role) session.user.role = token.role as UserRole
         session.user.twoFactorEnabled = token.twoFactorEnabled as boolean
+        session.user.name = token.name
+        session.user.email = token.email as string
+        session.user.isOAuth = token.isOAuth as boolean
       }
 
       return session
@@ -94,8 +100,13 @@ export const {
       if (!token.sub) return token
 
       const existingUser = await getUserById(token.sub)
-
       if (!existingUser) return token
+
+      const existingAccount = await getAccountByUserId(existingUser.id)
+
+      token.isOAuth = !!existingAccount
+      token.name = existingUser.name
+      token.email = existingUser.email
       token.role = existingUser.role
       token.twoFactorEnabled = existingUser.twoFactorEnabled
       return token

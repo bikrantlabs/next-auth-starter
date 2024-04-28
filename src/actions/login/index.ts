@@ -9,6 +9,7 @@ import { signIn } from "@/lib/auth"
 import { createSafeAction } from "@/lib/create-safe-action"
 import { db } from "@/lib/db"
 import { getUserByEmail } from "@/lib/server/get-user"
+import { sendEmailVerificationMail } from "@/lib/server/send-email-verification-mail"
 import {
   generateTwoFactorToken,
   generateVerificationToken,
@@ -68,12 +69,10 @@ async function handler(data: InputType): Promise<ReturnType> {
         }
       }
     } else {
-      const newVerificationToken = await generateVerificationToken(email)
-      await sendVerificationEmail(
-        existingUser.name || email.split("@")[0],
-        newVerificationToken.email,
-        newVerificationToken.token
-      )
+      await sendEmailVerificationMail({
+        email,
+        name: existingUser.name,
+      })
 
       return {
         success: false,
