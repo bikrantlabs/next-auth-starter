@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation"
 
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog"
+import { LoginCard } from "./login-card"
+
 interface LoginButtonProps {
   children: React.ReactNode
   mode?: "modal" | "redirect"
@@ -10,7 +13,6 @@ interface LoginButtonProps {
 
 export const LoginButton = ({
   children,
-  asChild,
   mode = "redirect",
 }: LoginButtonProps) => {
   const router = useRouter()
@@ -20,7 +22,14 @@ export const LoginButton = ({
     router.push("/auth/login")
   }
   if (mode === "modal") {
-    return <span>{/* TODO: Implement Modal */}</span>
+    return (
+      <Dialog>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent className="mx-auto flex items-center justify-center">
+          <LoginCard cardClassName="border-0" />
+        </DialogContent>
+      </Dialog>
+    )
   }
   return (
     <span onClick={onClick} className="cursor-pointer">

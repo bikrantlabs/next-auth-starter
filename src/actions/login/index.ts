@@ -22,7 +22,7 @@ import { LoginSchema } from "./schema"
 import { InputType, ReturnType } from "./types"
 
 async function handler(data: InputType): Promise<ReturnType> {
-  const { email, password, code } = data
+  const { email, password, code, callbackUrl } = data
 
   const existingUser = await getUserByEmail(email)
 
@@ -158,8 +158,7 @@ async function handler(data: InputType): Promise<ReturnType> {
     await signIn("credentials", {
       email,
       password,
-      // TODO: implement callbackUrl redirect
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     })
   } catch (error) {
     if (error instanceof AuthError) {

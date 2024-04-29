@@ -1,5 +1,6 @@
 import React from "react"
 
+import { cn } from "@/lib/utils"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 
 import { SocialButtons } from "./social-buttons"
@@ -8,6 +9,7 @@ interface CardWrapperProps {
   Header: JSX.Element
   Content: JSX.Element
   Footer?: JSX.Element
+  cardClassName?: string
   showSocialButtons?: boolean
 }
 /**
@@ -21,9 +23,10 @@ export const CardWrapper: React.FC<CardWrapperProps> = ({
   showSocialButtons = false,
   Footer,
   Content,
+  cardClassName,
 }) => {
   return (
-    <Card>
+    <Card className={cn(cardClassName)}>
       <CardHeader>
         <h1 className="text-4xl font-semibold text-center">
           🔏 Authentication

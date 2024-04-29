@@ -42,7 +42,6 @@ async function handler(
       },
     }
   }
-  // TODO: Send password reset link
   const token = await generatePasswordResetToken(email)
   await sendResetPasswordEmail(
     user.name || token.email.split("@")[0],
