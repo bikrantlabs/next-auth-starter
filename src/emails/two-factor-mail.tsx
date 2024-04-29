@@ -100,12 +100,6 @@ const upperSection = {
 
 const lowerSection = { padding: "25px 35px" }
 
-const footerText = {
-  ...text,
-  fontSize: "12px",
-  padding: "0 20px",
-}
-
 const verifyText = {
   ...text,
   margin: 0,

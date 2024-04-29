@@ -34,10 +34,7 @@ export const Features = () => {
           title={"Prisma & PostgreSQL"}
           description="PostgreSQL database with Prisma ORM"
         />
-        <FeatureCard
-          title={"Add new feature..."}
-          description="//TODO: Add description for new feature..."
-        />
+        <FeatureCard title={"Resend"} description="Send emails with resend" />
       </div>
     </div>
   )
