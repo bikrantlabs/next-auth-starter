@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { auth, signOut } from "@/lib/auth"
+import { auth } from "@/lib/auth"
 
 import { LoginButton } from "./auth/login-button"
 import { LogoutButton } from "./auth/logout-button"

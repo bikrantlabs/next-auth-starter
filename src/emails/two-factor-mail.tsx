@@ -1,4 +1,3 @@
-import * as React from "react"
 import {
   Body,
   Container,
@@ -7,7 +6,6 @@ import {
   Hr,
   Html,
   Img,
-  Link,
   Preview,
   Section,
   Text,
@@ -40,10 +38,8 @@ export function TwoFactorEmail({ twoFactorCode }: TwoFactorMailProps) {
               />
             </Section>
             <Section style={upperSection}>
-              <Heading style={h1}>Enable 2FA for your account</Heading>
-              <Text style={mainText}>
-                Enable two factor authentication for your account.
-              </Text>
+              <Heading style={h1}>2FA code for your account</Heading>
+              <Text style={mainText}>2FA code for your account</Text>
               <Section style={verificationSection}>
                 <Text style={verifyText}>Verification code</Text>
 
@@ -76,14 +72,6 @@ const h1 = {
   marginBottom: "15px",
 }
 
-const link = {
-  color: "#2754C5",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "14px",
-  textDecoration: "underline",
-}
-
 const text = {
   color: "#333",
   fontFamily:
@@ -111,12 +99,6 @@ const upperSection = {
 }
 
 const lowerSection = { padding: "25px 35px" }
-
-const footerText = {
-  ...text,
-  fontSize: "12px",
-  padding: "0 20px",
-}
 
 const verifyText = {
   ...text,

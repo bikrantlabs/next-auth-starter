@@ -34,6 +34,7 @@ interface LoginFormProps {
 }
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const params = useSearchParams()
+  const callbackUrl = params.get("callbackUrl")
   const [code, setCode] = useState("")
   const [hasCode, setHasCode] = useState(false)
   const { data, isLoading, execute } = useAction(loginAction)
@@ -51,6 +52,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       email: values.email,
       password: values.password,
       code,
+      callbackUrl: callbackUrl || undefined,
     })
   }
   useEffect(() => {

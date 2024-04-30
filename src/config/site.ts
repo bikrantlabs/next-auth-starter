@@ -1,14 +1,21 @@
 import { SiteConfig } from "@/types/site-config"
 
 export const siteConfig: SiteConfig = {
-  name: "Next Entree",
-  author: "redpangilinan",
+  name: "Next Auth Starter",
+  author: "bikrantjung",
   description:
-    "Next.js 14+ starter template with app router, shadcn/ui, typesafe env, icons and configs setup.",
-  keywords: ["Next.js", "React", "Tailwind CSS", "Radix UI", "shadcn/ui"],
+    "Next.js 14+ starter template with fully fetched authentication.",
+  keywords: [
+    "Next.js",
+    "React",
+    "Tailwind CSS",
+    "Radix UI",
+    "shadcn/ui",
+    "next-auth",
+  ],
   url: {
     base: process.env.NEXT_PUBLIC_APP_URL as string,
-    author: "https://rdev.pro",
+    author: "https://github.com/bikrantlabs",
   },
   links: {
     github: "https://github.com/bikrantlabs/next-auth-starter",
