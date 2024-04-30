@@ -1,5 +1,28 @@
 
 
+## [0.3.0](https://github.com/bikrantlabs/next-auth-starter/compare/0.2.0...0.3.0) (2024-04-30)
+
+
+### Features
+
+* **2fa:** 2fa authentication for 2fa enabled users ([4ead34b](https://github.com/bikrantlabs/next-auth-starter/commit/4ead34b0331fdbf86aec946a86680e1e1f8c16d6))
+* **2fa:** add 2fa code input form ([f5c5a9d](https://github.com/bikrantlabs/next-auth-starter/commit/f5c5a9dc9c7254893dd2cff4a95506e36a635ece))
+* **2fa:** add 2fa mails and schemas ([c0bd540](https://github.com/bikrantlabs/next-auth-starter/commit/c0bd540012d4441b7aade6abac7e557c453334fd))
+* **2fa:** send 2fa email during login ([9a96bce](https://github.com/bikrantlabs/next-auth-starter/commit/9a96bce70885274b298a594ab709faa7a9dae243))
+* **email:** improve email verification and verification page ([15c367b](https://github.com/bikrantlabs/next-auth-starter/commit/15c367b0200614a0abaa0011841f5fd3c0424b76))
+* **email:** send verification email to new users ([1026e4e](https://github.com/bikrantlabs/next-auth-starter/commit/1026e4ef45c44af003de1a5018f6923570beba72))
+* **page:** improve home page ui ([aaa03bf](https://github.com/bikrantlabs/next-auth-starter/commit/aaa03bf1d215676b0aba3408b837b12c53319b86))
+* **password:** reset password feature w/email ([555e66b](https://github.com/bikrantlabs/next-auth-starter/commit/555e66bf55cb5b13be6d103dfdab02f1cced8429))
+* **settings:** add feature to update settings ([2ed17ec](https://github.com/bikrantlabs/next-auth-starter/commit/2ed17ec2e9c2b6977d0c55b7015d83dec7bc0262))
+* **settings:** settings page and client/server example ([c3489a7](https://github.com/bikrantlabs/next-auth-starter/commit/c3489a741e05bfd24c93ee74549185df18c4fbd2))
+* **settings:** update settings action ([5be396e](https://github.com/bikrantlabs/next-auth-starter/commit/5be396e4ad4604311f64e18a04e44a796414e06b))
+* **signin:** oauth signin and error page ([345e250](https://github.com/bikrantlabs/next-auth-starter/commit/345e2504144c20ab49e627dac7289eb979adfd71))
+
+
+### Bug Fixes
+
+* **auth:** add modal login and fix login callback ([c904f60](https://github.com/bikrantlabs/next-auth-starter/commit/c904f6082a668d32eb58b6c3568def906e6b7eab))
+
 ## [0.2.0](https://github.com/bikrantlabs/next-auth-starter/compare/0.1.0...0.2.0) (2024-04-24)
 
 
